@@ -15,16 +15,15 @@ echo "${green}NVTX_ENABLED=${NVTX_ENABLED}${reset}"
 "${SPARK_HOME}"/sbin/start-master.sh
 
 nsys profile\
- -t cuda,nvtx\
+ -t cuda,nvtx,osrt\
+ -s cpu\
+ -o q"${QUERY}"-c"${CONCURRENT_GPU_TASKS}"-s"${SHUFFLE_PARTITIONS}"-p"${MAX_PARTITION_BYTES}"\
+-b"${BATCH_SIZE_BYTES}"-"${MODE}"\
+ --stats true\
+ -f true\
  -c nvtx\
  -p RunQuery@Java\
  -e NSYS_NVTX_PROFILER_REGISTER_ONLY=0\
- -s cpu\
- --cudabacktrace true\
- --stats false\
- -o q"${QUERY}"-c"${CONCURRENT_GPU_TASKS}"-s"${SHUFFLE_PARTITIONS}"-p"${MAX_PARTITION_BYTES}"\
--b"${BATCH_SIZE_BYTES}"-"${MODE}"\
- -f true\
  bash -c " \
 ${SPARK_HOME}/sbin/start-slave.sh spark://${SPARK_MASTER_HOST}:7077 & \
 ${DIR}/spark-shell-gpu.sh -i <(

@@ -5,7 +5,7 @@ if [[ $# -ne 6 ]]; then
     exit 1
 fi
 
-export DATA_DIR="/opt/data/tpcxbb-100GB"
+export DATA_DIR="/opt/data/tpcds-100GB"
 export QUERY=$1
 export CONCURRENT_GPU_TASKS=$2
 export SHUFFLE_PARTITIONS=$3

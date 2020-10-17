@@ -18,7 +18,6 @@
  --conf spark.locality.wait=0s\
  --conf spark.sql.files.maxPartitionBytes="${MAX_PARTITION_BYTES}"\
  --conf spark.sql.shuffle.partitions="${SHUFFLE_PARTITIONS}"\
- --conf spark.shuffle.manager=com.nvidia.spark.rapids.spark301.RapidsShuffleManager\
 \
  --conf spark.plugins=com.nvidia.spark.SQLPlugin\
  --conf spark.rapids.sql.concurrentGpuTasks="${CONCURRENT_GPU_TASKS}"\
@@ -40,3 +39,38 @@
 \
  --jars "${SPARK_CUDF_JAR}","${SPARK_RAPIDS_PLUGIN_JAR}","${SPARK_RAPIDS_INTEGRATION_TESTS_JAR}"\
  "$@"
+# --class com.nvidia.spark.rapids.tests.tpcds.ConvertFiles\
+# --input /opt/data/tpcds-100GB-csv\
+# --output /opt/data/tpcds-100GB\
+# --output-format parquet\
+# --coalesce\
+# call_center=1\
+# catalog_page=1\
+# catalog_returns=1\
+# customer_address=1\
+# customer=1\
+# customer_demographics=1\
+# date_dim=1\
+# dbgen_version=1\
+# household_demographics=1\
+# income_band=1\
+# inventory=1\
+# item=1\
+# promotion=1\
+# reason=1\
+# ship_mode=1\
+# store=1\
+# store_returns=1\
+# time_dim=1\
+# warehouse=1\
+# web_page=1\
+# web_returns=1\
+# web_site=1\
+# --repartition\
+# catalog_sales=4\
+# store_sales=6\
+# web_sales=2
+
+
+# --conf spark.shuffle.manager=com.nvidia.spark.rapids.spark301.RapidsShuffleManager\
+

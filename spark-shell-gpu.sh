@@ -40,13 +40,12 @@
  --jars "${SPARK_CUDF_JAR}","${SPARK_RAPIDS_PLUGIN_JAR}","${SPARK_RAPIDS_INTEGRATION_TESTS_JAR}"\
  "$@"
 # --class com.nvidia.spark.rapids.tests.tpcds.ConvertFiles\
-# --input /opt/data/tpcds-100GB-csv\
-# --output /opt/data/tpcds-100GB\
+# --input /opt/data/tpcds-1TB-csv\
+# --output /ssd/tpcds-1TB\
 # --output-format parquet\
-# --coalesce\
+# --repartition\
 # call_center=1\
 # catalog_page=1\
-# catalog_returns=1\
 # customer_address=1\
 # customer=1\
 # customer_demographics=1\
@@ -54,23 +53,22 @@
 # dbgen_version=1\
 # household_demographics=1\
 # income_band=1\
-# inventory=1\
 # item=1\
 # promotion=1\
 # reason=1\
 # ship_mode=1\
 # store=1\
-# store_returns=1\
 # time_dim=1\
 # warehouse=1\
 # web_page=1\
 # web_returns=1\
 # web_site=1\
-# --repartition\
-# catalog_sales=4\
-# store_sales=6\
-# web_sales=2
-
+# catalog_returns=1\
+# catalog_sales=1\
+# inventory=1\
+# store_returns=1\
+# store_sales=1\
+# web_sales=1
 
 # --conf spark.shuffle.manager=com.nvidia.spark.rapids.spark301.RapidsShuffleManager\
 

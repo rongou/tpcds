@@ -18,7 +18,6 @@
  --conf spark.locality.wait=0s\
  --conf spark.sql.files.maxPartitionBytes="${MAX_PARTITION_BYTES}"\
  --conf spark.sql.shuffle.partitions="${SHUFFLE_PARTITIONS}"\
- --conf spark.shuffle.manager=com.nvidia.spark.rapids.spark301.RapidsShuffleManager\
 \
  --conf spark.plugins=com.nvidia.spark.SQLPlugin\
  --conf spark.rapids.sql.concurrentGpuTasks="${CONCURRENT_GPU_TASKS}"\

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 if [[ $# -ne 6 ]]; then
-    echo "usage: script query# concurrent_gpu_tasks shuffle_partitions max_partition_bytes batch_size_bytes l|p"
+    echo "usage: script query# concurrent_gpu_tasks shuffle_partitions max_partition_bytes batch_size_bytes b|g"
     exit 1
 fi
 
@@ -12,17 +12,16 @@ export MAX_PARTITION_BYTES=$4
 export BATCH_SIZE_BYTES=$5
 
 case $6 in
-  l )
-    echo "Using legacy default stream"
-    export MODE="legacy"
+  b )
+    echo "Using system memory as bounce buffers"
+    export GDS_ENABLED="false"
     ;;
-  p )
-    echo "Using per-thread default stream"
-    export MODE="ptds"
-    export SPARK_CUDF_JAR=${SPARK_CUDF_PTDS_JAR}
+  g )
+    echo "Using GPUDirect Storage (GDS)"
+    export GDS_ENABLED="true"
     ;;
   * )
-    echo "Need to specify l for legacy or p for ptds"
+    echo "Need to specify b for system memory bounce or g for gds"
     exit 1
 esac
 
@@ -34,4 +33,5 @@ echo "CONCURRENT_GPU_TASKS=${CONCURRENT_GPU_TASKS}"
 echo "SHUFFLE_PARTITIONS=${SHUFFLE_PARTITIONS}"
 echo "MAX_PARTITION_BYTES=${MAX_PARTITION_BYTES}"
 echo "BATCH_SIZE_BYTES=${BATCH_SIZE_BYTES}"
+echo "GDS_ENABLED=${GDS_ENABLED}"
 echo "SPARK_CUDF_JAR=${SPARK_CUDF_JAR}${reset}"

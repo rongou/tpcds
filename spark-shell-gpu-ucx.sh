@@ -9,6 +9,7 @@
 : "${SHUFFLE_PARTITIONS:?Need to set SHUFFLE_PARTITIONS}"
 : "${MAX_PARTITION_BYTES:?Need to set MAX_PARTITION_BYTES}"
 : "${BATCH_SIZE_BYTES:?Need to set BATCH_SIZE_BYTES}"
+: "${GDS_ENABLED:?Need to set GDS_ENABLED}"
 : "${NVTX_ENABLED:?Need to set NVTX_ENABLED}"
 
 ${SPARK_HOME}/bin/spark-shell\
@@ -24,7 +25,7 @@ ${SPARK_HOME}/bin/spark-shell\
  --conf spark.rapids.memory.pinnedPool.size=4G\
  --conf spark.rapids.sql.batchSizeBytes=${BATCH_SIZE_BYTES}\
 \
- --conf spark.shuffle.manager=com.nvidia.spark.rapids.spark300.RapidsShuffleManager\
+ --conf spark.shuffle.manager=com.nvidia.spark.rapids.spark301.RapidsShuffleManager\
  --conf spark.shuffle.service.enabled=false\
  --conf spark.rapids.shuffle.transport.enabled=true\
  --conf spark.executorEnv.UCX_TLS=cuda_copy,cuda_ipc,rc,tcp\
@@ -33,6 +34,7 @@ ${SPARK_HOME}/bin/spark-shell\
  --conf spark.executorEnv.UCX_MEMTYPE_CACHE=n\
  --conf spark.rapids.shuffle.ucx.bounceBuffers.device.count=1\
  --conf spark.rapids.shuffle.ucx.bounceBuffers.host.count=1\
+ --conf spark.rapids.memory.gpu.direct.storage.spill.enabled="${GDS_ENABLED}"\
 \
  --conf spark.driver.memory=10G\
  --conf spark.driver.extraJavaOptions=-Dai.rapids.cudf.nvtx.enabled=${NVTX_ENABLED}\

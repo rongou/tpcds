@@ -23,7 +23,7 @@ configs[q95]="6 30 1g 1g"
 
 for i in "${queries[@]}"; do
   config="${configs[${i}]}"
-  "${DIR}"/benchmark.sh "${i}" ${config} l
-  "${DIR}"/benchmark.sh "${i}" ${config} p
+  "${DIR}"/benchmark.sh "${i}" ${config} b
+  "${DIR}"/benchmark.sh "${i}" ${config} g
   rm ./*.json
 done

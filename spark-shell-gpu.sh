@@ -9,6 +9,7 @@
 : "${SHUFFLE_PARTITIONS:?Need to set SHUFFLE_PARTITIONS}"
 : "${MAX_PARTITION_BYTES:?Need to set MAX_PARTITION_BYTES}"
 : "${BATCH_SIZE_BYTES:?Need to set BATCH_SIZE_BYTES}"
+: "${GDS_ENABLED:?Need to set GDS_ENABLED}"
 : "${NVTX_ENABLED:?Need to set NVTX_ENABLED}"
 
 "${SPARK_HOME}"/bin/spark-shell\
@@ -18,11 +19,14 @@
  --conf spark.locality.wait=0s\
  --conf spark.sql.files.maxPartitionBytes="${MAX_PARTITION_BYTES}"\
  --conf spark.sql.shuffle.partitions="${SHUFFLE_PARTITIONS}"\
+ --conf spark.shuffle.manager=com.nvidia.spark.rapids.spark301.RapidsShuffleManager\
+ --conf spark.shuffle.service.enabled=false\
 \
  --conf spark.plugins=com.nvidia.spark.SQLPlugin\
  --conf spark.rapids.sql.concurrentGpuTasks="${CONCURRENT_GPU_TASKS}"\
  --conf spark.rapids.memory.pinnedPool.size=8G\
  --conf spark.rapids.sql.batchSizeBytes="${BATCH_SIZE_BYTES}"\
+ --conf spark.rapids.memory.gpu.direct.storage.spill.enabled="${GDS_ENABLED}"\
 \
  --conf spark.driver.memory=10G\
  --conf spark.driver.extraJavaOptions=-Dai.rapids.cudf.nvtx.enabled="${NVTX_ENABLED}"\

@@ -1,2 +1,2 @@
-# tpcxbb
-Scripts for running TPCx-BB benchmarks on Spark
+# tpcds
+Scripts for running TPC-DS benchmarks on Spark

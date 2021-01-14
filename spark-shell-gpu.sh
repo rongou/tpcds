@@ -33,13 +33,13 @@
 \
  --conf spark.executor.extraClassPath="${SPARK_CUDF_JAR}":"${SPARK_RAPIDS_PLUGIN_JAR}"\
  --conf spark.executor.extraJavaOptions=-Dai.rapids.cudf.nvtx.enabled="${NVTX_ENABLED}"\
- --num-executors 1\
- --conf spark.executor.cores=6\
+ --conf spark.executor.instances="${SPARK_EXECUTOR_INSTANCES}"\
+ --conf spark.executor.cores="${SPARK_EXECUTOR_CORES}"\
  --conf spark.executor.memory=64G\
  --conf spark.executor.resource.gpu.amount=1\
 \
  --conf spark.task.cpus=1\
- --conf spark.task.resource.gpu.amount=0.1666\
+ --conf spark.task.resource.gpu.amount="${SPARK_TASK_RESOURCE_GPU_AMOUNT}"\
 \
  --jars "${SPARK_CUDF_JAR}","${SPARK_RAPIDS_PLUGIN_JAR}","${SPARK_RAPIDS_INTEGRATION_TESTS_JAR}"\
  "$@"

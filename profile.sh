@@ -19,8 +19,8 @@ echo "${green}NVTX_ENABLED=${NVTX_ENABLED}${reset}"
 nsys profile\
  -t cuda,nvtx,osrt\
  -s cpu\
- -o q"${QUERY}"-c"${CONCURRENT_GPU_TASKS}"-s"${SHUFFLE_PARTITIONS}"-p"${MAX_PARTITION_BYTES}"\
--b"${BATCH_SIZE_BYTES}"-"${MODE}"\
+ -o "${QUERY}"-c"${CONCURRENT_GPU_TASKS}"-s"${SHUFFLE_PARTITIONS}"-p"${MAX_PARTITION_BYTES}"\
+-b"${BATCH_SIZE_BYTES}"-gds_"${GDS_ENABLED}"\
  --stats true\
  -f true\
  -c nvtx\

@@ -7,7 +7,7 @@ if [[ ! -d "${DIR}" ]]; then DIR="${PWD}"; fi
 source "${DIR}"/setup.sh
 
 # warm page cache
-vmtouch -t -m 20G "${DATA_DIR}"
+#vmtouch -t -m 20G "${DATA_DIR}"
 
 "${DIR}"/spark-shell-gpu.sh -i <(
   echo "val args = Array(\"${DATA_DIR}\", \"${QUERY}\")"

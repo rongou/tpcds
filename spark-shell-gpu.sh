@@ -28,6 +28,14 @@
  --conf spark.rapids.memory.pinnedPool.size=8G\
  --conf spark.rapids.sql.batchSizeBytes="${BATCH_SIZE_BYTES}"\
  --conf spark.rapids.memory.gpu.direct.storage.spill.enabled="${GDS_ENABLED}"\
+ --conf spark.rapids.shuffle.transport.enabled=true\
+ --conf spark.executorEnv.UCX_TLS=cuda_copy,cuda_ipc,rc,tcp\
+ --conf spark.executorEnv.UCX_ERROR_SIGNALS=\
+ --conf spark.executorEnv.UCX_MAX_RNDV_RAILS=1\
+ --conf spark.executorEnv.UCX_MEMTYPE_CACHE=n\
+ --conf spark.executorEnv.LD_LIBRARY_PATH=/usr/lib:/usr/lib/ucx\
+ --conf spark.rapids.shuffle.maxMetadataSize=512K\
+ --conf spark.executorEnv.UCX_RNDV_SCHEME=put_zcopy\
 \
  --conf spark.driver.memory=10G\
  --conf spark.driver.extraJavaOptions=-Dai.rapids.cudf.nvtx.enabled="${NVTX_ENABLED}"\

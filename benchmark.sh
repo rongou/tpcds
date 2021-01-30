@@ -8,7 +8,12 @@ source "${DIR}"/setup.sh
 
 # warm page cache
 #vmtouch -t -m 20G "${DATA_DIR}"
-rm -fr "${SPARK_HOME}"/work/*
+
+# evict page cache
+#vmtouch -e "${DATA_DIR}"
+
+# clean up work directory
+#rm -fr "${SPARK_HOME}"/work/*
 
 "${DIR}"/spark-shell-gpu.sh -i <(
   echo "val args = Array(\"${DATA_DIR}\", \"${QUERY}\")"

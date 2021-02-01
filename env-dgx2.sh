@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-export SPARK_BASE_DIR=/raid/spark-team/rou
+export SPARK_BASE_DIR=/raid/spark-team
 
 # Spark
-export SPARK_HOME=${SPARK_BASE_DIR}/spark
-export JAR_HOME=${SPARK_BASE_DIR}/rapids
+export SPARK_HOME=${HOME}/spark
+export JAR_HOME=${HOME}/rapids
 
 export SPARK_CUDF_JAR=${JAR_HOME}/cudf.jar
 export SPARK_CUDF_NVTX_JAR=${JAR_HOME}/cudf-nvtx.jar
@@ -21,11 +21,11 @@ export SPARK_TASK_RESOURCE_GPU_AMOUNT=0.3
 export SPARK_LOCAL_DIRS=${SPARK_BASE_DIR}/tmp
 
 # Hadoop
-export HADOOP_HOME=${SPARK_BASE_DIR}/hadoop
+export HADOOP_HOME=${HOME}/hadoop
 export LD_LIBRARY_PATH=${HADOOP_HOME}/lib/native${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
 
 # Profiling
 export NVTX_ENABLED=false
 
 # Data
-export DATA_DIR="${SPARK_BASE_DIR}/../tpcds-1TB"
+export DATA_DIR="${SPARK_BASE_DIR}/tpcds-3TB-parquet"

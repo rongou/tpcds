@@ -21,4 +21,4 @@ rm -fr "${SPARK_HOME}"/work/*
 )
 
 echo "Checking spilled buffers:"
-egrep Spilled "${SPARK_HOME}"/work/*/*/stderr"" | wc -l
+egrep Spilled "${SPARK_HOME}"/work/*/*/stderr | wc -l

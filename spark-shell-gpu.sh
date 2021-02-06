@@ -22,6 +22,7 @@
  --conf spark.sql.adaptive.enabled=true\
  --conf spark.shuffle.manager=com.nvidia.spark.rapids.spark301.RapidsShuffleManager\
  --conf spark.shuffle.service.enabled=false\
+ --conf spark.sql.broadcastTimeout=600\
 \
  --conf spark.plugins=com.nvidia.spark.SQLPlugin\
  --conf spark.rapids.sql.concurrentGpuTasks="${CONCURRENT_GPU_TASKS}"\

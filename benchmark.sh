@@ -15,6 +15,12 @@ vmtouch -e "${DATA_DIR}"
 # clean up work directory
 rm -fr "${SPARK_HOME}"/work/*
 
+# clean up tmp directories
+rm -fr /raid/spark-home/tmp/*
+rm -fr /raid1/spark-home/tmp/*
+rm -fr /raid2/spark-home/tmp/*
+rm -fr /raid3/spark-home/tmp/*
+
 "${DIR}"/spark-shell-gpu.sh -i <(
   echo "val args = Array(\"${DATA_DIR}\", \"${QUERY}\")"
   cat "${DIR}"/query.scala

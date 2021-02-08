@@ -26,4 +26,4 @@ export LD_LIBRARY_PATH=${HADOOP_HOME}/lib/native${LD_LIBRARY_PATH:+:${LD_LIBRARY
 export NVTX_ENABLED=false
 
 # Data
-export DATA_DIR="${SPARK_BASE_DIR}/tpcds-10TB-parquet"
+export DATA_DIR="${SPARK_BASE_DIR}/tpcds-3TB-parquet"

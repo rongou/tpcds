@@ -18,7 +18,9 @@ for i in "${queries[@]}"; do
     continue
   fi
   config="${configs[${i}]}"
-  "${DIR}"/benchmark.sh "${i}" "${config}" b
-  "${DIR}"/benchmark.sh "${i}" "${config}" g
+  # shellcheck disable=SC2086
+  "${DIR}"/benchmark.sh "${i}" ${config} b
+  # shellcheck disable=SC2086
+  "${DIR}"/benchmark.sh "${i}" ${config} g
   rm ./*.json
 done

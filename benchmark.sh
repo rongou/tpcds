@@ -32,14 +32,15 @@ echo "Total spill size:"
 egrep "DeviceMemoryEventHandler: Spilled" "${SPARK_HOME}"/work/*/*/stderr | cut -d " " -f 6 | paste -sd+ | bc
 echo ""
 
-echo "Total # buffers written via GDS:"
-egrep "RapidsGdsStore: Spilled" "${SPARK_HOME}"/work/*/*/stderr | wc -l
-echo "Total bytes written via GDS:"
-egrep "RapidsGdsStore: Spilled" "${SPARK_HOME}"/work/*/*/stderr | cut -d " " -f 8 | cut -d ":" -f 2 | paste -sd+ | bc
-echo ""
+if [[ "${GDS_ENABLED}" == "true" ]]; then
+  echo "Total # buffers written via GDS:"
+  egrep "RapidsGdsStore: Spilled" "${SPARK_HOME}"/work/*/*/stderr | wc -l
+  echo "Total bytes written via GDS:"
+  egrep "RapidsGdsStore: Spilled" "${SPARK_HOME}"/work/*/*/stderr | cut -d " " -f 8 | cut -d ":" -f 2 | paste -sd+ | bc
+  echo ""
 
-echo "Total # buffers read via GDS:"
-egrep "RapidsGdsStore: Created device buffer" "${SPARK_HOME}"/work/*/*/stderr | wc -l
-echo "Total bytes read via GDS:"
-egrep "RapidsGdsStore: Created device buffer" "${SPARK_HOME}"/work/*/*/stderr | cut -d " " -f 10 | cut -d ":" -f 2 | paste -sd+ | bc
-
+  echo "Total # buffers read via GDS:"
+  egrep "RapidsGdsStore: Created device buffer" "${SPARK_HOME}"/work/*/*/stderr | wc -l
+  echo "Total bytes read via GDS:"
+  egrep "RapidsGdsStore: Created device buffer" "${SPARK_HOME}"/work/*/*/stderr | cut -d " " -f 10 | cut -d ":" -f 2 | paste -sd+ | bc
+fi

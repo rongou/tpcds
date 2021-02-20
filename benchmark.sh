@@ -32,6 +32,19 @@ echo "Total spill size:"
 egrep "DeviceMemoryEventHandler: Spilled" "${SPARK_HOME}"/work/*/*/stderr | cut -d " " -f 6 | paste -sd+ | bc
 echo ""
 
+if [[ "${GDS_ENABLED}" == "false" ]]; then
+  echo "Total # buffers read from disk:"
+  egrep "RapidsDiskStore: Created mmap buffer for" "${SPARK_HOME}"/work/*/*/stderr | wc -l
+  echo "Total bytes read from disk:"
+  egrep "RapidsDiskStore: Created mmap buffer for" "${SPARK_HOME}"/work/*/*/stderr | cut -d " " -f 10 | sed "s/0://" | paste -sd+ | bc
+  echo ""
+
+  echo "Total # buffers copied from host to device:"
+  egrep "RapidsDiskStore: copying from host" "${SPARK_HOME}"/work/*/*/stderr | wc -l
+  echo "Total bytes copied from host to device:"
+  egrep "RapidsDiskStore: copying from host" "${SPARK_HOME}"/work/*/*/stderr | cut -d " " -f 9 | cut -d "=" -f 2 | sed "s/,$//" | paste -sd+ | bc
+fi
+
 if [[ "${GDS_ENABLED}" == "true" ]]; then
   echo "Total # buffers written via GDS:"
   egrep "RapidsGdsStore: Spilled" "${SPARK_HOME}"/work/*/*/stderr | wc -l

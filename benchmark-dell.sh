@@ -14,13 +14,11 @@ for i in "${queries[@]}"; do
 done
 
 for i in "${queries[@]}"; do
-  if [[ "${failed_queries[*]}" =~ ${i} ]]; then
+  if [[ " ${failed_queries[@]} " =~ " ${i} " ]]; then
     continue
   fi
   config="${configs[${i}]}"
-  # shellcheck disable=SC2086
   "${DIR}"/benchmark.sh "${i}" ${config} b
-  # shellcheck disable=SC2086
   "${DIR}"/benchmark.sh "${i}" ${config} g
-  rm ./*.json
+  rm -f ./*.json
 done

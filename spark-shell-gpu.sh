@@ -34,7 +34,7 @@
  --conf spark.executorEnv.UCX_ERROR_SIGNALS=\
  --conf spark.executorEnv.UCX_MAX_RNDV_RAILS=1\
  --conf spark.executorEnv.UCX_MEMTYPE_CACHE=n\
- --conf spark.executorEnv.LD_LIBRARY_PATH=/usr/lib:/usr/lib/ucx\
+ --conf spark.executorEnv.LD_LIBRARY_PATH=/usr/lib/ucx\
  --conf spark.rapids.shuffle.maxMetadataSize=512K\
  --conf spark.executorEnv.UCX_RNDV_SCHEME=put_zcopy\
  --conf spark.executorEnv.UCX_RC_RX_QUEUE_LEN=1024\

@@ -33,6 +33,18 @@ egrep "DeviceMemoryEventHandler: Spilled" "${SPARK_HOME}"/work/*/*/stderr | cut 
 echo ""
 
 if [[ "${GDS_ENABLED}" == "false" ]]; then
+  echo "Total # buffers copied from device to host:"
+  egrep "RapidsDeviceMemoryStore: Spilling device memory buffer" "${SPARK_HOME}"/work/*/*/stderr | wc -l
+  echo "Total bytes copied from device to host:"
+  egrep "RapidsDeviceMemoryStore: Spilling device memory buffer" "${SPARK_HOME}"/work/*/*/stderr | cut -d " " -f 9 | cut -d "=" -f 2 | paste -sd+ | bc
+  echo ""
+
+  echo "Total # buffers written to disk:"
+  egrep "RapidsHostMemoryStore: Spilling host memory buffer" "${SPARK_HOME}"/work/*/*/stderr | wc -l
+  echo "Total bytes written to disk:"
+  egrep "RapidsHostMemoryStore: Spilling host memory buffer" "${SPARK_HOME}"/work/*/*/stderr | cut -d " " -f 9 | cut -d "=" -f 2 | paste -sd+ | bc
+  echo ""
+
   echo "Total # buffers read from disk:"
   egrep "RapidsDiskStore: Created mmap buffer for" "${SPARK_HOME}"/work/*/*/stderr | wc -l
   echo "Total bytes read from disk:"

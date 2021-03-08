@@ -33,39 +33,57 @@ egrep "DeviceMemoryEventHandler: Spilled" "${SPARK_HOME}"/work/*/*/stderr | cut 
 echo ""
 
 if [[ "${GDS_ENABLED}" == "false" ]]; then
-  echo "Total # buffers copied from device to host:"
+  echo "Total # buffers spilled from device to host:"
   egrep "RapidsDeviceMemoryStore: Spilling device memory buffer" "${SPARK_HOME}"/work/*/*/stderr | wc -l
-  echo "Total bytes copied from device to host:"
+  echo "Total bytes spilled from device to host:"
   egrep "RapidsDeviceMemoryStore: Spilling device memory buffer" "${SPARK_HOME}"/work/*/*/stderr | cut -d " " -f 9 | cut -d "=" -f 2 | paste -sd+ | bc
   echo ""
 
-  echo "Total # buffers written to disk:"
+  echo "Total # buffers spilled from host to disk:"
   egrep "RapidsHostMemoryStore: Spilling host memory buffer" "${SPARK_HOME}"/work/*/*/stderr | wc -l
-  echo "Total bytes written to disk:"
+  echo "Total bytes spilled from host to disk:"
   egrep "RapidsHostMemoryStore: Spilling host memory buffer" "${SPARK_HOME}"/work/*/*/stderr | cut -d " " -f 9 | cut -d "=" -f 2 | paste -sd+ | bc
   echo ""
 
-  echo "Total # buffers read from disk:"
-  egrep "RapidsDiskStore: Created mmap buffer for" "${SPARK_HOME}"/work/*/*/stderr | wc -l
+  echo "Total # buffers unspilled from host to device:"
+  egrep "RapidsHostMemoryStore: Unspilling host memory buffer" "${SPARK_HOME}"/work/*/*/stderr | wc -l
   echo "Total bytes read from disk:"
-  egrep "RapidsDiskStore: Created mmap buffer for" "${SPARK_HOME}"/work/*/*/stderr | cut -d " " -f 10 | sed "s/0://" | paste -sd+ | bc
+  egrep "RapidsHostMemoryStore: Unspilling host memory buffer" "${SPARK_HOME}"/work/*/*/stderr | cut -d " " -f 9 | sed "s/size=//" | paste -sd+ | bc
   echo ""
 
-  echo "Total # buffers copied from host to device:"
-  egrep "RapidsDiskStore: copying from host" "${SPARK_HOME}"/work/*/*/stderr | wc -l
-  echo "Total bytes copied from host to device:"
-  egrep "RapidsDiskStore: copying from host" "${SPARK_HOME}"/work/*/*/stderr | cut -d " " -f 9 | cut -d "=" -f 2 | sed "s/,$//" | paste -sd+ | bc
+  echo "Total # buffers unspilled from disk to device:"
+  egrep "RapidsDiskStore: Unspilling local disk buffer" "${SPARK_HOME}"/work/*/*/stderr | wc -l
+  echo "Total bytes unspilled from disk to device:"
+  egrep "RapidsDiskStore: Unspilling local disk buffer" "${SPARK_HOME}"/work/*/*/stderr | cut -d " " -f 9 | sed "s/size=//" | paste -sd+ | bc
+  echo ""
+
+  echo "Total # buffers skipped spilling from device to host:"
+  egrep "RapidsDeviceMemoryStore: Skipping spilling device memory buffer" "${SPARK_HOME}"/work/*/*/stderr | wc -l
+  echo "Total bytes skipped spilling from device to host:"
+  egrep "RapidsDeviceMemoryStore: Skipping spilling device memory buffer" "${SPARK_HOME}"/work/*/*/stderr | cut -d " " -f 10 | sed "s/size=//" | paste -sd+ | bc
+  echo ""
+
+  echo "Total # buffers skipped spilling from host to disk:"
+  egrep "RapidsHostMemoryStore: Skipping spilling host memory buffer" "${SPARK_HOME}"/work/*/*/stderr | wc -l
+  echo "Total bytes skipped spilling from host to disk:"
+  egrep "RapidsHostMemoryStore: Skipping spilling host memory buffer" "${SPARK_HOME}"/work/*/*/stderr | cut -d " " -f 10 | sed "s/size=//" | paste -sd+ | bc
 fi
 
 if [[ "${GDS_ENABLED}" == "true" ]]; then
-  echo "Total # buffers written via GDS:"
+  echo "Total # buffers spilled from device to GDS:"
   egrep "RapidsGdsStore: Spilled" "${SPARK_HOME}"/work/*/*/stderr | wc -l
-  echo "Total bytes written via GDS:"
+  echo "Total bytes spilled from device to GDS:"
   egrep "RapidsGdsStore: Spilled" "${SPARK_HOME}"/work/*/*/stderr | cut -d " " -f 8 | cut -d ":" -f 2 | paste -sd+ | bc
   echo ""
 
-  echo "Total # buffers read via GDS:"
+  echo "Total # buffers unspilled from GDS to device:"
   egrep "RapidsGdsStore: Created device buffer" "${SPARK_HOME}"/work/*/*/stderr | wc -l
-  echo "Total bytes read via GDS:"
+  echo "Total bytes unspilled from GDS to device:"
   egrep "RapidsGdsStore: Created device buffer" "${SPARK_HOME}"/work/*/*/stderr | cut -d " " -f 10 | cut -d ":" -f 2 | paste -sd+ | bc
+  echo ""
+
+  echo "Total # buffers skipped spilling from device to GDS:"
+  egrep "RapidsDeviceMemoryStore: Skipping spilling device memory buffer" "${SPARK_HOME}"/work/*/*/stderr | wc -l
+  echo "Total bytes skipped spilling from device to GDS:"
+  egrep "RapidsDeviceMemoryStore: Skipping spilling device memory buffer" "${SPARK_HOME}"/work/*/*/stderr | cut -d " " -f 10 | sed "s/size=//" | paste -sd+ | bc
 fi

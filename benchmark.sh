@@ -26,64 +26,66 @@ rm -fr /raid3/spark-home/tmp/*
   cat "${DIR}"/query.scala
 )
 
-echo "Total spill events:"
-egrep "DeviceMemoryEventHandler: Spilled" "${SPARK_HOME}"/work/*/*/stderr | wc -l
-echo "Total spill size:"
-egrep "DeviceMemoryEventHandler: Spilled" "${SPARK_HOME}"/work/*/*/stderr | cut -d " " -f 6 | paste -sd+ | bc
-echo ""
+match="DeviceMemoryEventHandler: Spilled"
+attempts=$(grep -c "${match}" "${SPARK_HOME}"/work/*/*/stderr)
+bytes=$(grep "${match}" "${SPARK_HOME}"/work/*/*/stderr | cut -d " " -f 6 | paste -sd+ | bc)
+echo "# spill events: ${attempts}"
+echo "Spilled bytes: ${bytes:-0}"
 
 if [[ "${GDS_ENABLED}" == "false" ]]; then
-  echo "Total # buffers spilled from device to host:"
-  egrep "RapidsDeviceMemoryStore: Spilling device memory buffer" "${SPARK_HOME}"/work/*/*/stderr | wc -l
-  echo "Total bytes spilled from device to host:"
-  egrep "RapidsDeviceMemoryStore: Spilling device memory buffer" "${SPARK_HOME}"/work/*/*/stderr | cut -d " " -f 9 | cut -d "=" -f 2 | paste -sd+ | bc
-  echo ""
+  match="RapidsDeviceMemoryStore: Spilling device memory buffer"
+  buffers=$(grep -c "${match}" "${SPARK_HOME}"/work/*/*/stderr)
+  bytes=$(grep "${match}" "${SPARK_HOME}"/work/*/*/stderr | cut -d " " -f 9 | sed "s/size=//" | paste -sd+ | bc)
+  echo "# buffers spilled device->host: ${buffers}"
+  echo "Bytes spilled device->host: ${bytes:-0}"
 
-  echo "Total # buffers spilled from host to disk:"
-  egrep "RapidsHostMemoryStore: Spilling host memory buffer" "${SPARK_HOME}"/work/*/*/stderr | wc -l
-  echo "Total bytes spilled from host to disk:"
-  egrep "RapidsHostMemoryStore: Spilling host memory buffer" "${SPARK_HOME}"/work/*/*/stderr | cut -d " " -f 9 | cut -d "=" -f 2 | paste -sd+ | bc
-  echo ""
+  match="RapidsHostMemoryStore: Spilling host memory buffer"
+  buffers=$(grep -c "${match}" "${SPARK_HOME}"/work/*/*/stderr)
+  bytes=$(grep "${match}" "${SPARK_HOME}"/work/*/*/stderr | cut -d " " -f 9 | sed "s/size=//" | paste -sd+ | bc)
+  echo "# buffers spilled host->disk: ${buffers}"
+  echo "Bytes spilled host->disk: ${bytes:-0}"
 
-  echo "Total # buffers unspilled from host to device:"
-  egrep "RapidsHostMemoryStore: Unspilling host memory buffer" "${SPARK_HOME}"/work/*/*/stderr | wc -l
-  echo "Total bytes read from disk:"
-  egrep "RapidsHostMemoryStore: Unspilling host memory buffer" "${SPARK_HOME}"/work/*/*/stderr | cut -d " " -f 9 | sed "s/size=//" | paste -sd+ | bc
-  echo ""
+  match="RapidsHostMemoryStore: Unspilling host memory buffer"
+  buffers=$(grep -c "${match}" "${SPARK_HOME}"/work/*/*/stderr)
+  bytes=$(grep "${match}" "${SPARK_HOME}"/work/*/*/stderr | cut -d " " -f 9 | sed "s/size=//" | paste -sd+ | bc)
+  echo "# buffers unspilled host->device: ${buffers}"
+  echo "Bytes unspilled host->device: ${bytes:-0}"
 
-  echo "Total # buffers unspilled from disk to device:"
-  egrep "RapidsDiskStore: Unspilling local disk buffer" "${SPARK_HOME}"/work/*/*/stderr | wc -l
-  echo "Total bytes unspilled from disk to device:"
-  egrep "RapidsDiskStore: Unspilling local disk buffer" "${SPARK_HOME}"/work/*/*/stderr | cut -d " " -f 9 | sed "s/size=//" | paste -sd+ | bc
-  echo ""
+  match="RapidsDiskStore: Unspilling local disk buffer"
+  buffers=$(grep -c "${match}" "${SPARK_HOME}"/work/*/*/stderr)
+  bytes=$(grep "${match}" "${SPARK_HOME}"/work/*/*/stderr | cut -d " " -f 9 | sed "s/size=//" | paste -sd+ | bc)
+  echo "# buffers unspilled disk->device: ${buffers}"
+  echo "Bytes unspilled disk->device: ${bytes:-0}"
 
-  echo "Total # buffers skipped spilling from device to host:"
-  egrep "RapidsDeviceMemoryStore: Skipping spilling device memory buffer" "${SPARK_HOME}"/work/*/*/stderr | wc -l
-  echo "Total bytes skipped spilling from device to host:"
-  egrep "RapidsDeviceMemoryStore: Skipping spilling device memory buffer" "${SPARK_HOME}"/work/*/*/stderr | cut -d " " -f 10 | sed "s/size=//" | paste -sd+ | bc
-  echo ""
+  match="RapidsDeviceMemoryStore: Skipping spilling device memory buffer"
+  buffers=$(grep -c "${match}" "${SPARK_HOME}"/work/*/*/stderr)
+  bytes=$(grep "${match}" "${SPARK_HOME}"/work/*/*/stderr | cut -d " " -f 10 | sed "s/size=//" | paste -sd+ | bc)
+  echo "# buffers skipped spilling device->host: ${buffers}"
+  echo "Bytes skipped spilling device->host: ${bytes:-0}"
 
-  echo "Total # buffers skipped spilling from host to disk:"
-  egrep "RapidsHostMemoryStore: Skipping spilling host memory buffer" "${SPARK_HOME}"/work/*/*/stderr | wc -l
-  echo "Total bytes skipped spilling from host to disk:"
-  egrep "RapidsHostMemoryStore: Skipping spilling host memory buffer" "${SPARK_HOME}"/work/*/*/stderr | cut -d " " -f 10 | sed "s/size=//" | paste -sd+ | bc
+  match="RapidsHostMemoryStore: Skipping spilling host memory buffer"
+  buffers=$(grep -c "${match}" "${SPARK_HOME}"/work/*/*/stderr)
+  bytes=$(grep "${match}" "${SPARK_HOME}"/work/*/*/stderr | cut -d " " -f 10 | sed "s/size=//" | paste -sd+ | bc)
+  echo "# buffers skipped spilling host->disk: ${buffers}"
+  echo "Bytes skipped spilling host->disk: ${bytes:-0}"
 fi
 
 if [[ "${GDS_ENABLED}" == "true" ]]; then
-  echo "Total # buffers spilled from device to GDS:"
-  egrep "RapidsGdsStore: Spilled" "${SPARK_HOME}"/work/*/*/stderr | wc -l
-  echo "Total bytes spilled from device to GDS:"
-  egrep "RapidsGdsStore: Spilled" "${SPARK_HOME}"/work/*/*/stderr | cut -d " " -f 8 | cut -d ":" -f 2 | paste -sd+ | bc
-  echo ""
+  match="RapidsGdsStore: Spilled"
+  buffers=$(grep -c "${match}" "${SPARK_HOME}"/work/*/*/stderr)
+  bytes=$(grep "${match}" "${SPARK_HOME}"/work/*/*/stderr | cut -d " " -f 8 | cut -d ":" -f 2 | paste -sd+ | bc)
+  echo "# buffers spilled device->GDS: ${buffers}"
+  echo "Bytes spilled device->GDS: ${bytes:-0}"
 
-  echo "Total # buffers unspilled from GDS to device:"
-  egrep "RapidsGdsStore: Created device buffer" "${SPARK_HOME}"/work/*/*/stderr | wc -l
-  echo "Total bytes unspilled from GDS to device:"
-  egrep "RapidsGdsStore: Created device buffer" "${SPARK_HOME}"/work/*/*/stderr | cut -d " " -f 10 | cut -d ":" -f 2 | paste -sd+ | bc
-  echo ""
+  match="RapidsGdsStore: Created device buffer"
+  buffers=$(grep -c "${match}" "${SPARK_HOME}"/work/*/*/stderr)
+  bytes=$(grep "${match}" "${SPARK_HOME}"/work/*/*/stderr | cut -d " " -f 10 | cut -d ":" -f 2 | paste -sd+ | bc)
+  echo "# buffers unspilled GDS->device: ${buffers}"
+  echo "Bytes unspilled GDS->device: ${bytes:-0}"
 
-  echo "Total # buffers skipped spilling from device to GDS:"
-  egrep "RapidsDeviceMemoryStore: Skipping spilling device memory buffer" "${SPARK_HOME}"/work/*/*/stderr | wc -l
-  echo "Total bytes skipped spilling from device to GDS:"
-  egrep "RapidsDeviceMemoryStore: Skipping spilling device memory buffer" "${SPARK_HOME}"/work/*/*/stderr | cut -d " " -f 10 | sed "s/size=//" | paste -sd+ | bc
+  match="RapidsDeviceMemoryStore: Skipping spilling device memory buffer"
+  buffers=$(grep -c "${match}" "${SPARK_HOME}"/work/*/*/stderr)
+  bytes=$(grep "${match}" "${SPARK_HOME}"/work/*/*/stderr | cut -d " " -f 10 | sed "s/size=//" | paste -sd+ | bc)
+  echo "# buffers skipped spilling device->GDS: ${buffers}"
+  echo "Bytes skipped spilling device->GDS: ${bytes:-0}"
 fi

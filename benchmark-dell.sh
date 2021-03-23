@@ -11,7 +11,7 @@ if [[ ! -d "${DIR}" ]]; then DIR="${PWD}"; fi
 # Spilling queries:
 queries=(q4 q11 q13 q14a q14b q16 q17 q23a q23b q24a q24b q25 q29 q64 q78 q80 q93 q95)
 
-failed_queries=(q14a q14b q72)
+failed_queries=(q72)
 
 declare -A configs
 for i in "${queries[@]}"; do

@@ -8,38 +8,61 @@ import re
 def get_header():
     return [
         'Query',
-        'Host Memory\nSpilling',
-        # 'Spill\nAttempts',
-        # 'Total Bytes\nSpilled',
-        # '#Buffers Spilled\ndevice->host',
-        # 'Bytes Spilled\ndevice->host',
-        # '#Buffers Spilled\nhost->disk',
-        # 'Bytes Spilled\nhost->disk',
-        # '#Buffers Unspilled\nhost->device',
-        # 'Bytes Unspilled\nhost->device',
-        # '#Buffers Unspilled\ndisk->device',
-        # 'Bytes Unspilled\ndisk->device',
-        # '#Buffers Skipped\ndevice->host',
-        # 'Bytes Skipped\ndevice->host',
-        # '#Buffers Skipped\nhost->disk',
-        # 'Bytes Skipped\nhost->disk',
-        'GDS\nSpilling',
-        # 'Spill\nAttempts',
-        # 'Total Bytes\nSpilled',
-        # '#Buffers Spilled\ndevice->GDS',
-        # 'Bytes Spilled\ndevice->GDS',
-        # '#Buffers Unspilled\nGDS->device',
-        # 'Bytes Unspilled\nGDS->device',
-        # '#Buffers Skipped\ndevice->GDS',
-        # 'Bytes Skipped\ndevice->GDS'
+        'Host Memory\nSpilling\nQuery Time',
+        '#Spills',
+        'Bytes\nSpilled',
+        '#Buffers\nSpilled\ndevice->host',
+        'Bytes\nSpilled\ndevice->host',
+        '#Buffers\nSpilled\nhost->disk',
+        'Bytes\nSpilled\nhost->disk',
+        '#Buffers\nUnspilled\nhost->device',
+        'Bytes\nUnspilled\nhost->device',
+        '#Buffers\nUnspilled\ndisk->device',
+        'Bytes\nUnspilled\ndisk->device',
+        '#Buffers\nSkipped\ndevice->host',
+        'Bytes\nSkipped\ndevice->host',
+        '#Buffers\nSkipped\nhost->disk',
+        'Bytes\nSkipped\nhost->disk',
+        'GDS\nSpilling\nQuery Time',
+        '#Spills',
+        'Bytes\nSpilled',
+        '#Buffers\nSpilled\ndevice->GDS',
+        'Bytes\nSpilled\ndevice->GDS',
+        '#Buffers\nUnspilled\nGDS->device',
+        'Bytes\nUnspilled\nGDS->device',
+        '#Buffers\nSkipped\ndevice->GDS',
+        'Bytes\nSkipped\ndevice->GDS'
     ]
 
 
 def parse_log(input_file, output_file):
     with open(input_file, 'r') as i, open(output_file, 'w') as o:
         writer = csv.writer(o)
-        writer.writerow(get_header())
+        header = get_header()
+        writer.writerow(header)
         query = re.compile(r'^\[BENCHMARK RUNNER] \[(.*)] Iteration 0 took (\d+) msec. Status: Completed$')
+        res = [
+            re.compile(r'^# spill events: (\d+)$'),
+            re.compile(r'^Spilled bytes: (\d+)$'),
+            re.compile(r'^# buffers spilled device->host: (\d+)$'),
+            re.compile(r'^Bytes spilled device->host: (\d+)$'),
+            re.compile(r'^# buffers spilled host->disk: (\d+)$'),
+            re.compile(r'^Bytes spilled host->disk: (\d+)$'),
+            re.compile(r'^# buffers unspilled host->device: (\d+)$'),
+            re.compile(r'^Bytes unspilled host->device: (\d+)$'),
+            re.compile(r'^# buffers unspilled disk->device: (\d+)$'),
+            re.compile(r'^Bytes unspilled disk->device: (\d+)$'),
+            re.compile(r'^# buffers skipped spilling device->host: (\d+)$'),
+            re.compile(r'^Bytes skipped spilling device->host: (\d+)$'),
+            re.compile(r'^# buffers skipped spilling host->disk: (\d+)$'),
+            re.compile(r'^Bytes skipped spilling host->disk: (\d+)$'),
+            re.compile(r'^# buffers spilled device->GDS: (\d+)$'),
+            re.compile(r'^Bytes spilled device->GDS: (\d+)$'),
+            re.compile(r'^# buffers unspilled GDS->device: (\d+)$'),
+            re.compile(r'^Bytes unspilled GDS->device: (\d+)$'),
+            re.compile(r'^# buffers skipped spilling device->GDS: (\d+)$'),
+            re.compile(r'^Bytes skipped spilling device->GDS: (\d+)$')
+        ]
         row = []
         for line in i:
             m = query.match(line)
@@ -48,8 +71,13 @@ def parse_log(input_file, output_file):
                     row.extend([m.group(1), m.group(2)])
                 else:
                     row.append(m.group(2))
-                    writer.writerow(row)
-                    row.clear()
+            for r in res:
+                m = r.match(line)
+                if m:
+                    row.append(m.group(1))
+            if len(row) == len(header):
+                writer.writerow(row)
+                row.clear()
 
 
 def print_help():

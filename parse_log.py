@@ -40,7 +40,8 @@ def parse_log(input_file, output_file):
         writer = csv.writer(o)
         header = get_header()
         writer.writerow(header)
-        query = re.compile(r'^\[BENCHMARK RUNNER] \[(.*)] Iteration 0 took (\d+) msec. Status: Completed$')
+        query = re.compile(
+            r'^\[BENCHMARK RUNNER] \[(.*)] Iteration 0 took (\d+) msec. Status: (Completed|CompletedWithTaskFailures)$')
         res = [
             re.compile(r'^# spill events: (\d+)$'),
             re.compile(r'^Spilled bytes: (\d+)$'),
@@ -73,7 +74,7 @@ def parse_log(input_file, output_file):
                     row.append(m.group(2))
             for r in res:
                 m = r.match(line)
-                if m:
+                if m and len(row) >= 2:
                     row.append(m.group(1))
             if len(row) == len(header):
                 writer.writerow(row)

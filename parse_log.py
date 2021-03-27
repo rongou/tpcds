@@ -70,8 +70,12 @@ def parse_log(input_file, output_file):
             if m:
                 if not row:
                     row.extend([m.group(1), m.group(2)])
-                else:
+                elif row[0] == m.group(1):
                     row.append(m.group(2))
+                else:
+                    writer.writerow([row[0], 'error'])
+                    row.clear()
+                    row.extend([m.group(1), m.group(2)])
             for r in res:
                 m = r.match(line)
                 if m and len(row) >= 2:

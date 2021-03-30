@@ -16,6 +16,8 @@ export SPARK_EXECUTOR_INSTANCES=8
 export SPARK_EXECUTOR_CORES=16
 export SPARK_TASK_RESOURCE_GPU_AMOUNT=0.0625
 
+export SPARK_LOCAL_DIRS=/raid/data/sparktmp
+
 # Hadoop
 export HADOOP_HOME=${HOME}/rou/hadoop
 export LD_LIBRARY_PATH=${HADOOP_HOME}/lib/native${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}

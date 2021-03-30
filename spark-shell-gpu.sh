@@ -15,6 +15,7 @@
 "${SPARK_HOME}"/bin/spark-shell\
  --master spark://"${SPARK_MASTER_HOST}":7077\
  --conf spark.serializer=org.apache.spark.serializer.KryoSerializer\
+ --conf spark.kryoserializer.buffer.mb=128\
  --conf spark.kryo.registrator=com.nvidia.spark.rapids.GpuKryoRegistrator\
  --conf spark.locality.wait=0s\
  --conf spark.sql.files.maxPartitionBytes="${MAX_PARTITION_BYTES}"\

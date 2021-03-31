@@ -10,7 +10,7 @@ failed_queries=(q31 q64 q72 q95)
 
 declare -A configs
 for i in "${queries[@]}"; do
-  configs[${i}]="2 200 1g 1g"
+  configs[${i}]="1 200 1g 1g"
 done
 
 for i in "${queries[@]}"; do

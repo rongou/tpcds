@@ -23,6 +23,15 @@ for i in "${queries[@]}"; do
     continue
   fi
   config="${configs[${i}]}"
+
+  echo "Using rapids-4-spark_2.12-0.5.0-6e3970c.jar"
+  ln -sf rapids-4-spark_2.12-0.5.0-6e3970c.jar /data/rou/rapids/rapids-4-spark.jar
+  "${DIR}"/benchmark.sh "${i}" ${config} b
+  "${DIR}"/benchmark.sh "${i}" ${config} g
+  rm -f ./*.json
+
+  echo "Using rapids-4-spark_2.12-0.5.0-6e3970c-stream.jar"
+  ln -sf rapids-4-spark_2.12-0.5.0-6e3970c-stream.jar /data/rou/rapids/rapids-4-spark.jar
   "${DIR}"/benchmark.sh "${i}" ${config} b
   "${DIR}"/benchmark.sh "${i}" ${config} g
   rm -f ./*.json

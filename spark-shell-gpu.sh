@@ -4,7 +4,7 @@
 : "${SPARK_MASTER_HOST:?Need to set SPARK_MASTER_HOST}"
 : "${SPARK_CUDF_JAR:?Need to set SPARK_CUDF_JAR}"
 : "${SPARK_RAPIDS_PLUGIN_JAR:?Need to set SPARK_RAPIDS_PLUGIN_JAR}"
-: "${SPARK_RAPIDS_INTEGRATION_TESTS_JAR:?Need to set SPARK_RAPIDS_INTEGRATION_TESTS_JAR}"
+: "${SPARK_RAPIDS_BENCHMARKS_JAR:?Need to set SPARK_RAPIDS_BENCHMARKS_JAR}"
 : "${CONCURRENT_GPU_TASKS:?Need to set CONCURRENT_GPU_TASKS}"
 : "${SHUFFLE_PARTITIONS:?Need to set SHUFFLE_PARTITIONS}"
 : "${MAX_PARTITION_BYTES:?Need to set MAX_PARTITION_BYTES}"
@@ -53,7 +53,7 @@
  --conf spark.task.cpus=1\
  --conf spark.task.resource.gpu.amount="${SPARK_TASK_RESOURCE_GPU_AMOUNT}"\
 \
- --jars "${SPARK_CUDF_JAR}","${SPARK_RAPIDS_PLUGIN_JAR}","${SPARK_RAPIDS_INTEGRATION_TESTS_JAR}"\
+ --jars "${SPARK_CUDF_JAR}","${SPARK_RAPIDS_PLUGIN_JAR}","${SPARK_RAPIDS_BENCHMARKS_JAR}"\
  "$@"
 # --class com.nvidia.spark.rapids.tests.tpcds.ConvertFiles\
 # --input /opt/data/tpcds-1TB-csv\

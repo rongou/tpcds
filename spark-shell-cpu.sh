@@ -12,4 +12,4 @@
 \
  --conf spark.task.cpus=1\
 \
- --jars "${SPARK_RAPIDS_INTEGRATION_TESTS_JAR}"
+ --jars "${SPARK_RAPIDS_BENCHMARKS_JAR}"

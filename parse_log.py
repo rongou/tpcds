@@ -8,34 +8,30 @@ import re
 def get_header():
     return [
         'Query',
-        '6e3970c\nHost Memory',
-        '6e3970c\nGDS',
-        'Unspill\nHost Memory',
-        'Unspill\nGDS',
-        # 'Host Memory\nSpilling\nQuery Time',
-        # '#Spills',
-        # 'Bytes\nSpilled',
-        # '#Buffers\nSpilled\ndevice->host',
-        # 'Bytes\nSpilled\ndevice->host',
-        # '#Buffers\nSpilled\nhost->disk',
-        # 'Bytes\nSpilled\nhost->disk',
-        # '#Buffers\nUnspilled\nhost->device',
-        # 'Bytes\nUnspilled\nhost->device',
-        # '#Buffers\nUnspilled\ndisk->device',
-        # 'Bytes\nUnspilled\ndisk->device',
-        # '#Buffers\nSkipped\ndevice->host',
-        # 'Bytes\nSkipped\ndevice->host',
+        'Host Memory\nSpilling\nQuery Time',
+        '#Spills',
+        'Bytes\nSpilled',
+        '#Buffers\nSpilled\ndevice->host',
+        'Bytes\nSpilled\ndevice->host',
+        '#Buffers\nSpilled\nhost->disk',
+        'Bytes\nSpilled\nhost->disk',
+        '#Buffers\nUnspilled\nhost->device',
+        'Bytes\nUnspilled\nhost->device',
+        '#Buffers\nUnspilled\ndisk->device',
+        'Bytes\nUnspilled\ndisk->device',
+        '#Buffers\nSkipped\ndevice->host',
+        'Bytes\nSkipped\ndevice->host',
         #   '#Buffers\nSkipped\nhost->disk',
         #   'Bytes\nSkipped\nhost->disk',
-        # 'GDS\nSpilling\nQuery Time',
-        # '#Spills',
-        # 'Bytes\nSpilled',
-        # '#Buffers\nSpilled\ndevice->GDS',
-        # 'Bytes\nSpilled\ndevice->GDS',
-        # '#Buffers\nUnspilled\nGDS->device',
-        # 'Bytes\nUnspilled\nGDS->device',
-        # '#Buffers\nSkipped\ndevice->GDS',
-        # 'Bytes\nSkipped\ndevice->GDS'
+        'GDS\nSpilling\nQuery Time',
+        '#Spills',
+        'Bytes\nSpilled',
+        '#Buffers\nSpilled\ndevice->GDS',
+        'Bytes\nSpilled\ndevice->GDS',
+        '#Buffers\nUnspilled\nGDS->device',
+        'Bytes\nUnspilled\nGDS->device',
+        '#Buffers\nSkipped\ndevice->GDS',
+        'Bytes\nSkipped\ndevice->GDS'
     ]
 
 
@@ -80,10 +76,10 @@ def parse_log(input_file, output_file):
                     writer.writerow([row[0], 'error'])
                     row.clear()
                     row.extend([m.group(1), m.group(2)])
-            # for r in res:
-            #     m = r.match(line)
-            #     if m and len(row) >= 2:
-            #         row.append(m.group(1))
+            for r in res:
+                m = r.match(line)
+                if m and len(row) >= 2:
+                    row.append(m.group(1))
             if len(row) == len(header):
                 writer.writerow(row)
                 row.clear()

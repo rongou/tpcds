@@ -41,6 +41,7 @@
  --conf spark.executorEnv.UCX_UD_RX_QUEUE_LEN=1024\
 \
  --conf spark.driver.memory=10G\
+ --conf spark.driver.maxResultSize=0\
  --conf spark.driver.extraJavaOptions=-Dai.rapids.cudf.nvtx.enabled="${NVTX_ENABLED}"\
 \
  --conf spark.executor.extraClassPath="${SPARK_CUDF_JAR}":"${SPARK_RAPIDS_PLUGIN_JAR}"\

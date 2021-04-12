@@ -3,8 +3,6 @@
 DIR="${BASH_SOURCE%/*}"
 if [[ ! -d "${DIR}" ]]; then DIR="${PWD}"; fi
 
-export SPARK_CUDF_JAR=${SPARK_CUDF_NVTX_JAR}
-
 # shellcheck source=.
 source "${DIR}"/setup.sh
 

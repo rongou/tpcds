@@ -5,7 +5,6 @@ export SPARK_HOME=${HOME}/rou/spark
 export JAR_HOME=${HOME}/rou/rapids
 
 export SPARK_CUDF_JAR=${JAR_HOME}/cudf.jar
-export SPARK_CUDF_NVTX_JAR=${JAR_HOME}/cudf-nvtx.jar
 export SPARK_RAPIDS_PLUGIN_JAR=${JAR_HOME}/rapids-4-spark.jar
 export SPARK_RAPIDS_BENCHMARKS_JAR=${JAR_HOME}/rapids-4-spark-benchmarks.jar
 

@@ -26,6 +26,7 @@
  --conf spark.sql.broadcastTimeout=600\
 \
  --conf spark.plugins=com.nvidia.spark.SQLPlugin\
+ --conf spark.rapids.cudfVersionOverride=true\
  --conf spark.rapids.sql.concurrentGpuTasks="${CONCURRENT_GPU_TASKS}"\
  --conf spark.rapids.memory.pinnedPool.size=8G\
  --conf spark.rapids.sql.batchSizeBytes="${BATCH_SIZE_BYTES}"\

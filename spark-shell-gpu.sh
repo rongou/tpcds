@@ -31,6 +31,8 @@
  --conf spark.rapids.memory.pinnedPool.size=8G\
  --conf spark.rapids.sql.batchSizeBytes="${BATCH_SIZE_BYTES}"\
  --conf spark.rapids.memory.gpu.direct.storage.spill.enabled="${GDS_ENABLED}"\
+ --conf spark.rapids.memory.gpu.direct.storage.spill.alignedIO=false\
+ --conf spark.rapids.memory.gpu.unspill.enabled=false\
  --conf spark.rapids.shuffle.transport.enabled=true\
  --conf spark.executorEnv.UCX_TLS=cuda_copy,cuda_ipc,rc,tcp\
  --conf spark.executorEnv.UCX_ERROR_SIGNALS=\

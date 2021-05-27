@@ -7,6 +7,9 @@
 : "${SPARK_RAPIDS_BENCHMARKS_JAR:?Need to set SPARK_RAPIDS_BENCHMARKS_JAR}"
 : "${CONCURRENT_GPU_TASKS:?Need to set CONCURRENT_GPU_TASKS}"
 : "${SHUFFLE_PARTITIONS:?Need to set SHUFFLE_PARTITIONS}"
+: "${ALIGNED_IO:?Need to set ALIGNED_IO}"
+: "${ALIGNMENT_THRESHOLD:?Need to set ALIGNMENT_THRESHOLD}"
+: "${UNSPILL:?Need to set UNSPILL}"
 : "${MAX_PARTITION_BYTES:?Need to set MAX_PARTITION_BYTES}"
 : "${BATCH_SIZE_BYTES:?Need to set BATCH_SIZE_BYTES}"
 : "${GDS_ENABLED:?Need to set GDS_ENABLED}"
@@ -31,8 +34,9 @@
  --conf spark.rapids.memory.pinnedPool.size=8G\
  --conf spark.rapids.sql.batchSizeBytes="${BATCH_SIZE_BYTES}"\
  --conf spark.rapids.memory.gpu.direct.storage.spill.enabled="${GDS_ENABLED}"\
- --conf spark.rapids.memory.gpu.direct.storage.spill.alignedIO=false\
- --conf spark.rapids.memory.gpu.unspill.enabled=false\
+ --conf spark.rapids.memory.gpu.direct.storage.spill.alignedIO="${ALIGNED_IO}"\
+ --conf spark.rapids.memory.gpu.direct.storage.spill.alignmentThreshold="${ALIGNMENT_THRESHOLD}"\
+ --conf spark.rapids.memory.gpu.unspill.enabled="${UNSPILL}"\
  --conf spark.rapids.shuffle.transport.enabled=true\
  --conf spark.executorEnv.UCX_TLS=cuda_copy,cuda_ipc,rc,tcp\
  --conf spark.executorEnv.UCX_ERROR_SIGNALS=\

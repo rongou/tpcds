@@ -31,6 +31,7 @@
  --conf spark.plugins=com.nvidia.spark.SQLPlugin\
  --conf spark.rapids.cudfVersionOverride=true\
  --conf spark.rapids.sql.concurrentGpuTasks="${CONCURRENT_GPU_TASKS}"\
+ --conf spark.rapids.memory.host.spillStorageSize=32G\
  --conf spark.rapids.memory.pinnedPool.size=8G\
  --conf spark.rapids.sql.batchSizeBytes="${BATCH_SIZE_BYTES}"\
  --conf spark.rapids.memory.gpu.direct.storage.spill.enabled="${GDS_ENABLED}"\

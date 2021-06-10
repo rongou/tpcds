@@ -13,6 +13,7 @@ export SHUFFLE_PARTITIONS=200
 export ALIGNED_IO="false"
 export ALIGNMENT_THRESHOLD="64k"
 export UNSPILL="false"
+export GDS_HOST_SPILL="false"
 export MAX_PARTITION_BYTES=1g
 export BATCH_SIZE_BYTES=1g
 
@@ -23,6 +24,10 @@ while [[ $# -gt 0 ]]; do
   -g)
     echo "Using GPUDirect Storage (GDS)"
     export GDS_ENABLED="true"
+    shift
+    ;;
+  -h)
+    export GDS_HOST_SPILL="true"
     shift
     ;;
   -c)
@@ -64,4 +69,5 @@ echo "SHUFFLE_PARTITIONS=${SHUFFLE_PARTITIONS}"
 echo "ALIGNED_IO=${ALIGNED_IO}"
 echo "ALIGNMENT_THRESHOLD=${ALIGNMENT_THRESHOLD}"
 echo "UNSPILL=${UNSPILL}"
-echo "GDS_ENABLED=${GDS_ENABLED}${reset}"
+echo "GDS_ENABLED=${GDS_ENABLED}"
+echo "GDS_HOST_SPILL=${GDS_HOST_SPILL}${reset}"

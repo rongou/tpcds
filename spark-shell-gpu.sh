@@ -13,6 +13,7 @@
 : "${MAX_PARTITION_BYTES:?Need to set MAX_PARTITION_BYTES}"
 : "${BATCH_SIZE_BYTES:?Need to set BATCH_SIZE_BYTES}"
 : "${GDS_ENABLED:?Need to set GDS_ENABLED}"
+: "${GDS_HOST_SPILL:?Need to set GDS_HOST_SPILL}"
 : "${NVTX_ENABLED:?Need to set NVTX_ENABLED}"
 
 "${SPARK_HOME}"/bin/spark-shell\
@@ -35,6 +36,7 @@
  --conf spark.rapids.memory.pinnedPool.size=8G\
  --conf spark.rapids.sql.batchSizeBytes="${BATCH_SIZE_BYTES}"\
  --conf spark.rapids.memory.gpu.direct.storage.spill.enabled="${GDS_ENABLED}"\
+ --conf spark.rapids.memory.gpu.direct.storage.spill.useHostMemory="${GDS_HOST_SPILL}"\
  --conf spark.rapids.memory.gpu.direct.storage.spill.alignedIO="${ALIGNED_IO}"\
  --conf spark.rapids.memory.gpu.direct.storage.spill.alignmentThreshold="${ALIGNMENT_THRESHOLD}"\
  --conf spark.rapids.memory.gpu.unspill.enabled="${UNSPILL}"\

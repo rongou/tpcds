@@ -49,6 +49,9 @@
  --conf spark.executorEnv.UCX_RNDV_SCHEME=put_zcopy\
  --conf spark.executorEnv.UCX_RC_RX_QUEUE_LEN=1024\
  --conf spark.executorEnv.UCX_UD_RX_QUEUE_LEN=1024\
+ --conf spark.rapids.shuffle.ucx.bounceBuffers.device.count="${SPARK_EXECUTOR_INSTANCES}"\
+ --conf spark.rapids.shuffle.ucx.bounceBuffers.host.count="${SPARK_EXECUTOR_INSTANCES}"\
+ --conf spark.rapids.shuffle.ucx.bounceBuffers.size=8M\
 \
  --conf spark.driver.memory=10G\
  --conf spark.driver.maxResultSize=0\

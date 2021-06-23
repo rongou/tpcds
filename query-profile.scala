@@ -6,11 +6,11 @@ import org.apache.spark.sql.{DataFrame, SparkSession}
 val input = args(0)
 val query = args(1)
 
-TpcdsLikeSpark.setupAllParquet(spark, input)
+TpcdsLikeSpark.setupAllParquet(spark, input, false)
 
 val nvtxRange = new NvtxRange("RunQuery", NvtxColor.ORANGE)
 try {
-  val benchmark = new BenchmarkRunner(new TpcdsLikeBench(true))
+  val benchmark = new BenchmarkRunner(new TpcdsLikeBench(false))
   benchmark.collect(spark, query, 1)
 } finally {
   nvtxRange.close()

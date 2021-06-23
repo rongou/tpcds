@@ -25,4 +25,4 @@ export LD_LIBRARY_PATH=${HADOOP_HOME}/lib/native${LD_LIBRARY_PATH:+:${LD_LIBRARY
 export NVTX_ENABLED=false
 
 # Data
-export DATA_DIR="${SPARK_BASE_DIR}/data/tpcds-1TB"
+export DATA_DIR="${SPARK_BASE_DIR}/data/tpcds/sf1000-parquet/useDecimal=false,useDate=true,filterNull=false"

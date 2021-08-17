@@ -25,7 +25,7 @@
  --conf spark.sql.files.maxPartitionBytes="${MAX_PARTITION_BYTES}"\
  --conf spark.sql.shuffle.partitions="${SHUFFLE_PARTITIONS}"\
  --conf spark.sql.adaptive.enabled=true\
- --conf spark.shuffle.manager=com.nvidia.spark.rapids.spark311.RapidsShuffleManager\
+ --conf spark.shuffle.manager=com.nvidia.spark.rapids.spark312.RapidsShuffleManager\
  --conf spark.shuffle.service.enabled=false\
  --conf spark.sql.broadcastTimeout=600\
 \

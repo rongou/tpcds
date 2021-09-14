@@ -18,15 +18,13 @@
 
 "${SPARK_HOME}"/bin/spark-shell\
  --master spark://"${SPARK_MASTER_HOST}":7077\
- --conf spark.serializer=org.apache.spark.serializer.KryoSerializer\
- --conf spark.kryoserializer.buffer=128m\
- --conf spark.kryo.registrator=com.nvidia.spark.rapids.GpuKryoRegistrator\
  --conf spark.locality.wait=0s\
  --conf spark.sql.files.maxPartitionBytes="${MAX_PARTITION_BYTES}"\
  --conf spark.sql.shuffle.partitions="${SHUFFLE_PARTITIONS}"\
  --conf spark.sql.adaptive.enabled=true\
  --conf spark.shuffle.manager=com.nvidia.spark.rapids.spark312.RapidsShuffleManager\
  --conf spark.shuffle.service.enabled=false\
+ --conf spark.dynamicAllocation.enabled=false\
  --conf spark.sql.broadcastTimeout=600\
 \
  --conf spark.plugins=com.nvidia.spark.SQLPlugin\
@@ -41,14 +39,13 @@
  --conf spark.rapids.memory.gpu.direct.storage.spill.alignmentThreshold="${ALIGNMENT_THRESHOLD}"\
  --conf spark.rapids.memory.gpu.unspill.enabled="${UNSPILL}"\
  --conf spark.rapids.shuffle.transport.enabled=true\
- --conf spark.executorEnv.UCX_TLS=cuda_copy,cuda_ipc,rc,tcp\
  --conf spark.executorEnv.UCX_ERROR_SIGNALS=\
- --conf spark.executorEnv.UCX_MAX_RNDV_RAILS=1\
  --conf spark.executorEnv.UCX_MEMTYPE_CACHE=n\
- --conf spark.rapids.shuffle.maxMetadataSize=512K\
+ --conf spark.executorEnv.UCX_IB_RX_QUEUE_LEN=1024\
+ --conf spark.executorEnv.UCX_TLS=cuda_copy,cuda_ipc,rc,tcp\
  --conf spark.executorEnv.UCX_RNDV_SCHEME=put_zcopy\
- --conf spark.executorEnv.UCX_RC_RX_QUEUE_LEN=1024\
- --conf spark.executorEnv.UCX_UD_RX_QUEUE_LEN=1024\
+ --conf spark.executorEnv.UCX_MAX_RNDV_RAILS=1\
+ --conf spark.rapids.shuffle.maxMetadataSize=512K\
  --conf spark.rapids.shuffle.ucx.bounceBuffers.size=8M\
 \
  --conf spark.driver.memory=10G\
@@ -67,35 +64,3 @@
 \
  --jars "${SPARK_CUDF_JAR}","${SPARK_RAPIDS_PLUGIN_JAR}","${SPARK_RAPIDS_BENCHMARKS_JAR}"\
  "$@"
-# --class com.nvidia.spark.rapids.tests.tpcds.ConvertFiles\
-# --input /opt/data/tpcds-1TB-csv\
-# --output /ssd/tpcds-1TB\
-# --output-format parquet\
-# --repartition\
-# call_center=1\
-# catalog_page=1\
-# customer_address=1\
-# customer=1\
-# customer_demographics=1\
-# date_dim=1\
-# dbgen_version=1\
-# household_demographics=1\
-# income_band=1\
-# item=1\
-# promotion=1\
-# reason=1\
-# ship_mode=1\
-# store=1\
-# time_dim=1\
-# warehouse=1\
-# web_page=1\
-# web_returns=1\
-# web_site=1\
-# catalog_returns=1\
-# catalog_sales=1\
-# inventory=1\
-# store_returns=1\
-# store_sales=1\
-# web_sales=1
-
-

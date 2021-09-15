@@ -12,6 +12,6 @@ for i in "${queries[@]}"; do
   if [[ " ${failed_queries[@]} " =~ " ${i} " ]]; then
     continue
   fi
-  "${DIR}"/benchmark.sh "${i}"
+  "${DIR}"/benchmark.sh "${i}" -c 6
   rm -f ./*.json
 done

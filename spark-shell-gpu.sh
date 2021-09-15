@@ -72,5 +72,5 @@
  --query "${QUERY}"\
  --input "${DATA_DIR}"\
  --input-format parquet\
- --summary-file-prefix "tpcds-${QUERY}-gpu"\
+ --summary-file-prefix "tpcds-gpu"\
  --iterations 1

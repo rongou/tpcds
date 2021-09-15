@@ -60,14 +60,14 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-green=$(tput setaf 2)
-reset=$(tput sgr 0)
-echo "${green}DATA_DIR=${DATA_DIR}"
-echo "QUERY=${QUERY}"
-echo "CONCURRENT_GPU_TASKS=${CONCURRENT_GPU_TASKS}"
-echo "SHUFFLE_PARTITIONS=${SHUFFLE_PARTITIONS}"
-echo "ALIGNED_IO=${ALIGNED_IO}"
-echo "ALIGNMENT_THRESHOLD=${ALIGNMENT_THRESHOLD}"
-echo "UNSPILL=${UNSPILL}"
-echo "GDS_ENABLED=${GDS_ENABLED}"
-echo "GDS_HOST_SPILL=${GDS_HOST_SPILL}${reset}"
+#green=$(tput setaf 2)
+#reset=$(tput sgr 0)
+#echo "${green}DATA_DIR=${DATA_DIR}"
+#echo "QUERY=${QUERY}"
+#echo "CONCURRENT_GPU_TASKS=${CONCURRENT_GPU_TASKS}"
+#echo "SHUFFLE_PARTITIONS=${SHUFFLE_PARTITIONS}"
+#echo "ALIGNED_IO=${ALIGNED_IO}"
+#echo "ALIGNMENT_THRESHOLD=${ALIGNMENT_THRESHOLD}"
+#echo "UNSPILL=${UNSPILL}"
+#echo "GDS_ENABLED=${GDS_ENABLED}"
+#echo "GDS_HOST_SPILL=${GDS_HOST_SPILL}${reset}"

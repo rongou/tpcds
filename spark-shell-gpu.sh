@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -x
+
 : "${SPARK_HOME:?Need to set SPARK_HOME}"
 : "${SPARK_MASTER_HOST:?Need to set SPARK_MASTER_HOST}"
 : "${SPARK_CUDF_JAR:?Need to set SPARK_CUDF_JAR}"

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+set -x
 : "${SPARK_HOME:?Need to set SPARK_HOME}"
 : "${SPARK_MASTER_HOST:?Need to set SPARK_MASTER_HOST}"
 : "${SPARK_CUDF_JAR:?Need to set SPARK_CUDF_JAR}"
@@ -16,8 +16,11 @@
 : "${GDS_HOST_SPILL:?Need to set GDS_HOST_SPILL}"
 : "${NVTX_ENABLED:?Need to set NVTX_ENABLED}"
 
-"${SPARK_HOME}"/bin/spark-shell\
+"${SPARK_HOME}"/bin/spark-submit\
  --master spark://"${SPARK_MASTER_HOST}":7077\
+ --conf spark.serializer=org.apache.spark.serializer.KryoSerializer\
+ --conf spark.kryoserializer.buffer=128m\
+ --conf spark.kryo.registrator=com.nvidia.spark.rapids.GpuKryoRegistrator\
  --conf spark.locality.wait=0s\
  --conf spark.sql.files.maxPartitionBytes="${MAX_PARTITION_BYTES}"\
  --conf spark.sql.shuffle.partitions="${SHUFFLE_PARTITIONS}"\
@@ -62,5 +65,12 @@
  --conf spark.task.cpus=1\
  --conf spark.task.resource.gpu.amount="${SPARK_TASK_RESOURCE_GPU_AMOUNT}"\
 \
- --jars "${SPARK_CUDF_JAR}","${SPARK_RAPIDS_PLUGIN_JAR}","${SPARK_RAPIDS_BENCHMARKS_JAR}"\
- "$@"
+ --jars "${SPARK_CUDF_JAR}","${SPARK_RAPIDS_PLUGIN_JAR}"\
+ --class com.nvidia.spark.rapids.tests.BenchmarkRunner\
+ "${SPARK_RAPIDS_BENCHMARKS_JAR}"\
+ --benchmark tpcds\
+ --query "${QUERY}"\
+ --input "${DATA_DIR}"\
+ --input-format parquet\
+ --summary-file-prefix "tpcds-${QUERY}-gpu"\
+ --iterations 1

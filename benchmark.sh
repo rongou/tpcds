@@ -21,10 +21,7 @@ rm -fr /raid1/spark-home/tmp/*
 rm -fr /raid2/spark-home/tmp/*
 rm -fr /raid3/spark-home/tmp/*
 
-"${DIR}"/spark-shell-gpu.sh -i <(
-  echo "val args = Array(\"${DATA_DIR}\", \"${QUERY}\")"
-  cat "${DIR}"/query.scala
-)
+"${DIR}"/spark-shell-gpu.sh
 
 match="DeviceMemoryEventHandler: Spilled"
 attempts=$(grep "${match}" "${SPARK_HOME}"/work/*/*/stderr | wc -l)

@@ -29,7 +29,7 @@ bytes=$(grep "${match}" "${SPARK_HOME}"/work/*/*/stderr | cut -d " " -f 6 | past
 echo "# spill events: ${attempts}"
 echo "Spilled bytes: ${bytes:-0}"
 
-match="RapidsHostMemoryStore: Spilled to host memory"
+match="RapidsDeviceMemoryStore: Spilling device memory buffer .* to host memory"
 buffers=$(grep "${match}" "${SPARK_HOME}"/work/*/*/stderr | wc -l)
 bytes=$(grep "${match}" "${SPARK_HOME}"/work/*/*/stderr | cut -d " " -f 9 | sed "s/size=//" | paste -sd+ | bc)
 echo "# buffers spilled device->host: ${buffers}"

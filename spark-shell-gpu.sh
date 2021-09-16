@@ -15,6 +15,8 @@
 : "${GDS_ENABLED:?Need to set GDS_ENABLED}"
 : "${GDS_HOST_SPILL:?Need to set GDS_HOST_SPILL}"
 : "${NVTX_ENABLED:?Need to set NVTX_ENABLED}"
+: "${GPU_MEMORY_POOL:?Need to set GPU_MEMORY_POOL}"
+: "${GPU_DIRECT_RDMA:?Need to set GPU_DIRECT_RDMA}"
 
 "${SPARK_HOME}"/bin/spark-submit\
  --master spark://"${SPARK_MASTER_HOST}":7077\
@@ -35,6 +37,7 @@
  --conf spark.rapids.sql.concurrentGpuTasks="${CONCURRENT_GPU_TASKS}"\
  --conf spark.rapids.memory.host.spillStorageSize=32G\
  --conf spark.rapids.memory.pinnedPool.size=8G\
+  --conf spark.rapids.memory.gpu.pool="${GPU_MEMORY_POOL}"\
  --conf spark.rapids.sql.batchSizeBytes="${BATCH_SIZE_BYTES}"\
  --conf spark.rapids.memory.gpu.direct.storage.spill.enabled="${GDS_ENABLED}"\
  --conf spark.rapids.memory.gpu.direct.storage.spill.useHostMemory="${GDS_HOST_SPILL}"\
@@ -48,6 +51,7 @@
  --conf spark.executorEnv.UCX_TLS=cuda_copy,cuda_ipc,rc,tcp\
  --conf spark.executorEnv.UCX_RNDV_SCHEME=put_zcopy\
  --conf spark.executorEnv.UCX_MAX_RNDV_RAILS=1\
+ --conf spark.executorEnv.UCX_IB_GPU_DIRECT_RDMA="${GPU_DIRECT_RDMA}"\
  --conf spark.rapids.shuffle.maxMetadataSize=512K\
  --conf spark.rapids.shuffle.ucx.bounceBuffers.size=8M\
 \

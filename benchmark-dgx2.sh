@@ -13,8 +13,8 @@ for i in "${queries[@]}"; do
     continue
   fi
   echo "***** Using Arena allocator *****"
-  "${DIR}"/benchmark.sh "${i}" -c 6
+  "${DIR}"/benchmark.sh "${i}" -c 3
   echo "***** Using Async allocator *****"
-  "${DIR}"/benchmark.sh "${i}" -c 6 -async
+  "${DIR}"/benchmark.sh "${i}" -c 3 -async
   rm -f ./*.json
 done

@@ -12,6 +12,9 @@ for i in "${queries[@]}"; do
   if [[ " ${failed_queries[@]} " =~ " ${i} " ]]; then
     continue
   fi
+  echo "***** Using Arena allocator *****"
   "${DIR}"/benchmark.sh "${i}" -c 6
+  echo "***** Using Async allocator *****"
+  "${DIR}"/benchmark.sh "${i}" -c 6 -async
   rm -f ./*.json
 done

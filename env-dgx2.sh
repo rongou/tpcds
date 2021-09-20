@@ -25,5 +25,5 @@ export LD_LIBRARY_PATH=${HADOOP_HOME}/lib/native${LD_LIBRARY_PATH:+:${LD_LIBRARY
 export NVTX_ENABLED=false
 
 # Data
-#export DATA_DIR="/raid2/spark-team/tpcds/sf5000-parquet/useDecimal=false,useDate=true,filterNull=false"
-export DATA_DIR="/raid/spark-team/tpcds/sf3000-parquet/useDecimal=false,useDate=true,filterNull=false"
+export DATA_DIR="/raid2/spark-team/tpcds/sf5000-parquet/useDecimal=false,useDate=true,filterNull=false"
+#export DATA_DIR="/raid/spark-team/tpcds/sf3000-parquet/useDecimal=false,useDate=true,filterNull=false"

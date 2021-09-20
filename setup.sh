@@ -2,7 +2,7 @@
 
 usage() {
   cat << EOF
-usage: script query# [-g] [-c concurrent_gpu_tasks] [-s shuffle_partitions] [-a] [-t allocation_threshold] [-u] [-async] [-i iterators]
+usage: script query# [-g] [-c concurrent_gpu_tasks] [-s shuffle_partitions] [-a] [-t allocation_threshold] [-u] [-async] [-i iterations]
 EOF
   exit 1
 }

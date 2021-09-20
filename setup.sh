@@ -1,8 +1,14 @@
 #!/usr/bin/env bash
 
-if [[ $# -lt 1 ]]; then
-  echo "usage: script query# [-g] [-c concurrent_gpu_tasks] [-s shuffle_partitions] [-a] [-t allocation_threshold] [-u]"
+usage() {
+  cat << EOF
+usage: script query# [-g] [-c concurrent_gpu_tasks] [-s shuffle_partitions] [-a] [-t allocation_threshold] [-u] [-async] [-i iterators]
+EOF
   exit 1
+}
+
+if [[ $# -lt 1 ]]; then
+  usage
 fi
 
 export QUERY=$1
@@ -67,10 +73,7 @@ while [[ $# -gt 0 ]]; do
     shift
     ;;
   *) # unknown option
-    cat << EOF
-usage: script query# [-g] [-c concurrent_gpu_tasks] [-s shuffle_partitions] [-a] [-t allocation_threshold] [-u] [-async] [-i iterators]
-EOF
-    exit 1
+    usage
     ;;
   esac
 done

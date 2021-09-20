@@ -17,6 +17,7 @@
 : "${NVTX_ENABLED:?Need to set NVTX_ENABLED}"
 : "${GPU_MEMORY_POOL:?Need to set GPU_MEMORY_POOL}"
 : "${GPU_DIRECT_RDMA:?Need to set GPU_DIRECT_RDMA}"
+: "${ITERATIONS:?Need to set ITERATIONS}"
 
 "${SPARK_HOME}"/bin/spark-submit\
  --master spark://"${SPARK_MASTER_HOST}":7077\
@@ -77,4 +78,4 @@
  --input "${DATA_DIR}"\
  --input-format parquet\
  --summary-file-prefix "tpcds-gpu"\
- --iterations 1
+ --iterations "${ITERATIONS}"

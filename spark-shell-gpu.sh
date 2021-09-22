@@ -38,7 +38,7 @@
  --conf spark.rapids.sql.concurrentGpuTasks="${CONCURRENT_GPU_TASKS}"\
  --conf spark.rapids.memory.host.spillStorageSize=32G\
  --conf spark.rapids.memory.pinnedPool.size=8G\
-  --conf spark.rapids.memory.gpu.pool="${GPU_MEMORY_POOL}"\
+ --conf spark.rapids.memory.gpu.pool="${GPU_MEMORY_POOL}"\
  --conf spark.rapids.sql.batchSizeBytes="${BATCH_SIZE_BYTES}"\
  --conf spark.rapids.memory.gpu.direct.storage.spill.enabled="${GDS_ENABLED}"\
  --conf spark.rapids.memory.gpu.direct.storage.spill.useHostMemory="${GDS_HOST_SPILL}"\

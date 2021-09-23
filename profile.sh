@@ -17,16 +17,15 @@ echo "${green}NVTX_ENABLED=${NVTX_ENABLED}${reset}"
 nsys profile\
  -t cuda,nvtx,osrt\
  -s cpu\
- -o "${QUERY}"-c"${CONCURRENT_GPU_TASKS}"-s"${SHUFFLE_PARTITIONS}"-p"${MAX_PARTITION_BYTES}"\
--b"${BATCH_SIZE_BYTES}"-gds_"${GDS_ENABLED}"\
+ -o "${QUERY}"-c"${CONCURRENT_GPU_TASKS}"-"${GPU_MEMORY_POOL}"\
  --stats true\
  -f true\
  -c nvtx\
  -p RunQuery@Java\
  -e NSYS_NVTX_PROFILER_REGISTER_ONLY=0\
  bash -c " \
-${SPARK_HOME}/sbin/start-slave.sh spark://${SPARK_MASTER_HOST}:7077 & \
+${SPARK_HOME}/sbin/start-worker.sh spark://${SPARK_MASTER_HOST}:7077 & \
 ${DIR}/spark-shell-gpu.sh -i <(
   echo 'val args = Array(\"'${DATA_DIR}'\", \"'${QUERY}'\")'
   cat ${DIR}/query-profile.scala); \
-${SPARK_HOME}/sbin/stop-slave.sh"
+${SPARK_HOME}/sbin/stop-worker.sh"

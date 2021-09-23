@@ -19,7 +19,7 @@
 : "${GPU_DIRECT_RDMA:?Need to set GPU_DIRECT_RDMA}"
 : "${ITERATIONS:?Need to set ITERATIONS}"
 
-"${SPARK_HOME}"/bin/spark-shell\
+"${SPARK_HOME}"/bin/spark-submit\
  --master spark://"${SPARK_MASTER_HOST}":7077\
  --conf spark.serializer=org.apache.spark.serializer.KryoSerializer\
  --conf spark.kryoserializer.buffer=128m\
@@ -70,5 +70,12 @@
  --conf spark.task.cpus=1\
  --conf spark.task.resource.gpu.amount="${SPARK_TASK_RESOURCE_GPU_AMOUNT}"\
 \
- --jars "${SPARK_CUDF_JAR}","${SPARK_RAPIDS_PLUGIN_JAR}","${SPARK_RAPIDS_BENCHMARKS_JAR}"\
- "$@"
+ --jars "${SPARK_CUDF_JAR}","${SPARK_RAPIDS_PLUGIN_JAR}"\
+ --class com.nvidia.spark.rapids.tests.BenchmarkRunner\
+ "${SPARK_RAPIDS_BENCHMARKS_JAR}"\
+ --benchmark tpcds\
+ --query "${QUERY}"\
+ --input "${DATA_DIR}"\
+ --input-format parquet\
+ --summary-file-prefix "tpcds-gpu"\
+ --iterations "${ITERATIONS}"

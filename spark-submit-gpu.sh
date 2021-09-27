@@ -16,7 +16,6 @@
 : "${GDS_HOST_SPILL:?Need to set GDS_HOST_SPILL}"
 : "${NVTX_ENABLED:?Need to set NVTX_ENABLED}"
 : "${GPU_MEMORY_POOL:?Need to set GPU_MEMORY_POOL}"
-: "${GPU_DIRECT_RDMA:?Need to set GPU_DIRECT_RDMA}"
 : "${ITERATIONS:?Need to set ITERATIONS}"
 
 "${SPARK_HOME}"/bin/spark-submit\

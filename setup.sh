@@ -23,7 +23,6 @@ export GDS_HOST_SPILL="false"
 export MAX_PARTITION_BYTES=1g
 export BATCH_SIZE_BYTES=1g
 export GPU_MEMORY_POOL="ARENA"
-export GPU_DIRECT_RDMA="yes"
 export ITERATIONS=1
 
 while [[ $# -gt 0 ]]; do
@@ -64,7 +63,6 @@ while [[ $# -gt 0 ]]; do
     ;;
   -async)
     export GPU_MEMORY_POOL="ASYNC"
-    export GPU_DIRECT_RDMA="no"
     shift
     ;;
   -i)

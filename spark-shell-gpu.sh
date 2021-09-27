@@ -16,7 +16,6 @@
 : "${GDS_HOST_SPILL:?Need to set GDS_HOST_SPILL}"
 : "${NVTX_ENABLED:?Need to set NVTX_ENABLED}"
 : "${GPU_MEMORY_POOL:?Need to set GPU_MEMORY_POOL}"
-: "${GPU_DIRECT_RDMA:?Need to set GPU_DIRECT_RDMA}"
 : "${ITERATIONS:?Need to set ITERATIONS}"
 
 "${SPARK_HOME}"/bin/spark-shell\
@@ -52,7 +51,6 @@
  --conf spark.executorEnv.UCX_TLS=cuda_copy,cuda_ipc,rc,tcp\
  --conf spark.executorEnv.UCX_RNDV_SCHEME=put_zcopy\
  --conf spark.executorEnv.UCX_MAX_RNDV_RAILS=1\
- --conf spark.executorEnv.UCX_IB_GPU_DIRECT_RDMA="${GPU_DIRECT_RDMA}"\
  --conf spark.rapids.shuffle.maxMetadataSize=512K\
  --conf spark.rapids.shuffle.ucx.bounceBuffers.size=8M\
 \

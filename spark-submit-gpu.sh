@@ -52,7 +52,6 @@
  --conf spark.executorEnv.UCX_TLS=cuda_copy,cuda_ipc,rc,tcp\
  --conf spark.executorEnv.UCX_RNDV_SCHEME=put_zcopy\
  --conf spark.executorEnv.UCX_MAX_RNDV_RAILS=1\
- --conf spark.executorEnv.UCX_IB_GPU_DIRECT_RDMA="${GPU_DIRECT_RDMA}"\
  --conf spark.rapids.shuffle.maxMetadataSize=512K\
  --conf spark.rapids.shuffle.ucx.bounceBuffers.size=8M\
 \

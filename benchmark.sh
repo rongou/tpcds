@@ -10,7 +10,7 @@ source "${DIR}"/setup.sh
 #vmtouch -t -m 20G "${DATA_DIR}"
 
 # evict page cache
-vmtouch -e "${DATA_DIR}" &> /dev/null
+#vmtouch -e "${DATA_DIR}" &> /dev/null
 
 # clean up work directory
 rm -fr "${SPARK_HOME}"/work/*

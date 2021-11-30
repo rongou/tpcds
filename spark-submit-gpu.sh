@@ -30,7 +30,7 @@
  --conf spark.shuffle.manager=com.nvidia.spark.rapids.spark320.RapidsShuffleManager\
  --conf spark.shuffle.service.enabled=false\
  --conf spark.dynamicAllocation.enabled=false\
- --conf spark.sql.broadcastTimeout=600\
+ --conf spark.sql.broadcastTimeout=6000\
 \
  --conf spark.plugins=com.nvidia.spark.SQLPlugin\
  --conf spark.rapids.cudfVersionOverride=true\
@@ -77,3 +77,7 @@
  --input-format parquet\
  --summary-file-prefix "tpcds-gpu"\
  --iterations "${ITERATIONS}"
+
+# --conf spark.rapids.memory.gpu.allocFraction=1\
+# --conf spark.rapids.memory.gpu.debug=STDOUT\
+# --conf spark.executorEnv.JAVA_HOME=/opt/compute-sanitizer-java\

@@ -10,7 +10,7 @@ source "${DIR}"/setup.sh
 #vmtouch -t -m 20G "${DATA_DIR}"
 
 # evict page cache
-#vmtouch -e "${DATA_DIR}" &> /dev/null
+vmtouch -e "${DATA_DIR}" &> /dev/null
 
 # clean up work directory
 rm -fr "${SPARK_HOME}"/work/*
@@ -82,3 +82,7 @@ buffers=$(grep "${match}" "${SPARK_HOME}"/work/*/*/stderr | wc -l)
 bytes=$(grep "${match}" "${SPARK_HOME}"/work/*/*/stderr | cut -d " " -f 10 | sed "s/size=//" | paste -sd+ | bc)
 echo "# buffers skipped spilling device->GDS: ${buffers}"
 echo "Bytes skipped spilling device->GDS: ${bytes:-0}"
+
+for pid in $(nvidia-smi --query-compute-apps=pid --format=csv,noheader); do
+  wait -n "${pid}"
+done

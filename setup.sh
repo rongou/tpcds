@@ -65,6 +65,10 @@ while [[ $# -gt 0 ]]; do
     export GPU_MEMORY_POOL="ASYNC"
     shift
     ;;
+  -cuda)
+    export GPU_MEMORY_POOL="NONE"
+    shift
+    ;;
   -i)
     export ITERATIONS="$2"
     shift

@@ -84,5 +84,5 @@ echo "# buffers skipped spilling device->GDS: ${buffers}"
 echo "Bytes skipped spilling device->GDS: ${bytes:-0}"
 
 for pid in $(nvidia-smi --query-compute-apps=pid --format=csv,noheader); do
-  wait -n "${pid}"
+  wait -n "${pid}" || continue
 done

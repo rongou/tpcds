@@ -27,15 +27,32 @@
  --conf spark.sql.files.maxPartitionBytes="${MAX_PARTITION_BYTES}"\
  --conf spark.sql.shuffle.partitions="${SHUFFLE_PARTITIONS}"\
  --conf spark.sql.adaptive.enabled=true\
+ --conf spark.shuffle.manager=com.nvidia.spark.rapids.spark320.RapidsShuffleManager\
+ --conf spark.shuffle.service.enabled=false\
  --conf spark.dynamicAllocation.enabled=false\
  --conf spark.sql.broadcastTimeout=6000\
 \
  --conf spark.plugins=com.nvidia.spark.SQLPlugin\
  --conf spark.rapids.cudfVersionOverride=true\
  --conf spark.rapids.sql.concurrentGpuTasks="${CONCURRENT_GPU_TASKS}"\
+ --conf spark.rapids.memory.host.spillStorageSize=32G\
  --conf spark.rapids.memory.pinnedPool.size=8G\
  --conf spark.rapids.memory.gpu.pool="${GPU_MEMORY_POOL}"\
  --conf spark.rapids.sql.batchSizeBytes="${BATCH_SIZE_BYTES}"\
+ --conf spark.rapids.memory.gpu.direct.storage.spill.enabled="${GDS_ENABLED}"\
+ --conf spark.rapids.memory.gpu.direct.storage.spill.useHostMemory="${GDS_HOST_SPILL}"\
+ --conf spark.rapids.memory.gpu.direct.storage.spill.alignedIO="${ALIGNED_IO}"\
+ --conf spark.rapids.memory.gpu.direct.storage.spill.alignmentThreshold="${ALIGNMENT_THRESHOLD}"\
+ --conf spark.rapids.memory.gpu.unspill.enabled="${UNSPILL}"\
+ --conf spark.rapids.shuffle.transport.enabled=true\
+ --conf spark.executorEnv.UCX_ERROR_SIGNALS=\
+ --conf spark.executorEnv.UCX_MEMTYPE_CACHE=n\
+ --conf spark.executorEnv.UCX_IB_RX_QUEUE_LEN=1024\
+ --conf spark.executorEnv.UCX_TLS=cuda_copy,cuda_ipc,rc,tcp\
+ --conf spark.executorEnv.UCX_RNDV_SCHEME=put_zcopy\
+ --conf spark.executorEnv.UCX_MAX_RNDV_RAILS=1\
+ --conf spark.rapids.shuffle.maxMetadataSize=512K\
+ --conf spark.rapids.shuffle.ucx.bounceBuffers.size=8M\
 \
  --conf spark.driver.memory=10G\
  --conf spark.driver.maxResultSize=0\

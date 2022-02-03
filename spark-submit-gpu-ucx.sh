@@ -36,6 +36,7 @@
  --conf spark.rapids.cudfVersionOverride=true\
  --conf spark.rapids.sql.concurrentGpuTasks="${CONCURRENT_GPU_TASKS}"\
  --conf spark.rapids.memory.host.spillStorageSize=32G\
+ --conf spark.rapids.memory.host.pageablePool.size=32G\
  --conf spark.rapids.memory.pinnedPool.size=8G\
  --conf spark.rapids.memory.gpu.pool="${GPU_MEMORY_POOL}"\
  --conf spark.rapids.sql.batchSizeBytes="${BATCH_SIZE_BYTES}"\
